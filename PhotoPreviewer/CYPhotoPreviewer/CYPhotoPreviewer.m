@@ -43,6 +43,17 @@
     self.frame = [UIScreen mainScreen].bounds;
     self.backgroundColor = [UIColor clearColor];
     
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+    [self addGestureRecognizer:singleTap];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [self addGestureRecognizer:doubleTap];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:longPress];
+    
     // 设置模糊背景
     self.blurBackground = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.blurBackground.frame = self.frame;
@@ -58,17 +69,6 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.scrollView];
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
-    [self addGestureRecognizer:singleTap];
-    
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [singleTap requireGestureRecognizerToFail:doubleTap];
-    [self addGestureRecognizer:doubleTap];
-    
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    [self addGestureRecognizer:longPress];
     
     // containerView
     self.containerView = [[UIView alloc] init];
@@ -199,4 +199,5 @@
         [vc presentViewController:alertController animated:YES completion:nil];
     }
 }
+
 @end
